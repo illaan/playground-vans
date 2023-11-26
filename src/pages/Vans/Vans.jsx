@@ -11,7 +11,7 @@ function Vans() {
 
   // const [vans, setVans] = useState([]);
   // const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
 
   const typeFilter = searchParams.get("type");
 
@@ -69,9 +69,9 @@ function Vans() {
   //   return <h1>Loading...</h1>;
   // }
 
-  if (error) {
-    return <h1>There was an error: {error.message}</h1>;
-  }
+  // if (error) {
+  //   return <h1>There was an error: {error.message}</h1>;
+  // }
   return (
     <div className="van-list-container">
       <h1>Explore our van options</h1>
