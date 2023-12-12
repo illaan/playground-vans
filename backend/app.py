@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, abort, make_response
+from flask import Flask, jsonify, abort, request, make_response
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -62,6 +62,8 @@ vans = [
     },
 ]
 
+users = [{ "id": "123", "email": "b@b.com", "password": "p123", "name": "Bob" }]
+
 @app.route('/api/vans', methods=['GET'])
 def get_vans():
     #for testing error handling
@@ -96,6 +98,30 @@ def get_host_van(v_id):
     if van is None:
         abort(404)
     return jsonify(van)
+
+@app.route('/login', methods=['POST'])
+def login():
+    if not request.is_json:
+        return jsonify({"message": "Invalid request, must provide JSON"}), 400
+
+    data = request.json
+    email = data.get("email")
+    password = data.get("password")
+
+    if not email or not password:
+        return jsonify({"message": "Email and password are required"}), 400
+
+    found_user = next((user for user in users if user["email"] == email and user["password"] == password), None)
+
+    if not found_user:
+        return jsonify({"message": "No user with those credentials found!"}), 401
+
+    token = "Enjoy your pizza, here's your token."
+
+    sanitized_user = {"name": found_user.get("name"), "id": found_user.get("id"), "email": found_user.get("email")}
+
+    return jsonify({"user": sanitized_user, "token": token})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
