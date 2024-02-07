@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import "../../styles/Vans.css";
 import { Link, useSearchParams, useLoaderData } from "react-router-dom";
 import { getVans } from "../../api";
+import { TranslationContext } from "../../TranslationContext";
+import { useContext } from "react";
 
 export function loader() {
   return getVans();
 }
 function Vans() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { translations, selectedLanguage, handleLanguageChange } =
+    useContext(TranslationContext);
 
   // const [vans, setVans] = useState([]);
   // const [loading, setLoading] = useState(false);
@@ -74,35 +78,35 @@ function Vans() {
   // }
   return (
     <div className="van-list-container">
-      <h1>Explore our van options</h1>
+      <h1>{translations.vansmessage}</h1>
       <div className="van-list-filter-buttons">
         <button
           onClick={() => handleFilterChange("type", "simple")}
           className={`van-type simple 
           ${typeFilter === "simple" ? "selected" : ""}`}
         >
-          Simple
+          {translations.simple}
         </button>
         <button
           onClick={() => handleFilterChange("type", "luxury")}
           className={`van-type luxury 
           ${typeFilter === "luxury" ? "selected" : ""}`}
         >
-          Luxury
+          {translations.luxury}
         </button>
         <button
           onClick={() => handleFilterChange("type", "rugged")}
           className={`van-type rugged 
           ${typeFilter === "rugged" ? "selected" : ""}`}
         >
-          Rugged
+          {translations.rugged}
         </button>
         {typeFilter ? (
           <button
             onClick={() => handleFilterChange("type", null)}
             className="van-type clear-filters"
           >
-            Clear filters
+            {translations.clear}
           </button>
         ) : null}
       </div>

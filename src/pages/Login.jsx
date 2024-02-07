@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 import { useState } from "react";
 import { loginUser } from "../api";
+import { TranslationContext } from "../TranslationContext";
+import { useContext } from "react";
 
 export function loader({ request }) {
   const url = new URL(request.url).searchParams.get("message");
@@ -31,6 +33,8 @@ export async function action({ request }) {
 }
 
 function Login() {
+  const { translations, selectedLanguage, handleLanguageChange } =
+    useContext(TranslationContext);
   // const [loginFormData, setLoginFormData] = useState({
   //   email: "",
   //   password: ""
@@ -58,7 +62,7 @@ function Login() {
       {message && <h3 style={{ color: "red" }}>{message}</h3>}
       {errorMessage && <h3 style={{ color: "red" }}>{errorMessage}</h3>}
 
-      <h1>Sign in to your account</h1>
+      <h1>{translations.signInMessage}</h1>
       <Form method="post" className="login-form" replace>
         <input name="email" type="email" placeholder="Email adress" />
         <input name="password" type="password" placeholder="Password" />

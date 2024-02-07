@@ -122,6 +122,45 @@ def login():
 
     return jsonify({"user": sanitized_user, "token": token})
 
+@app.route('/translations', methods=['GET'])
+def get_translations():
+    lang = request.args.get('lang', 'en')  # Default to English if no language is specified
+    translations = {} 
+    if lang == 'bs':
+        translations = {
+            'host': 'Vi',
+            'about': 'O nama',
+            'vans': 'Vozila',
+            'dashboard': 'Platforma',
+            'income': 'Prihod',
+            'reviews': 'Recenczije',
+            'simple': 'Jednostavni',
+            'luxury': 'Luksuzni',
+            'rugged': 'Polovni',
+            'vansmessage': 'Istraži naša kombi vozila',
+            'signInMessage': 'Prijavi se na korisnički račun'
+
+
+        }
+    else:
+        translations = {
+            'host': 'Host',
+            'about': 'About Us',
+            'vans': 'Vans',
+            'dashboard': 'Dashbaord',
+            'income': 'Income',
+            'reviews': 'Reviews',
+            'simple': 'Simple',
+            'luxury': 'Luxury',
+            'rugged': 'Rugged',
+            'vansmessage': 'Explore our van options',
+            'signInMessage': 'Sign in to your account'
+
+            
+        }
+    return jsonify(translations)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
